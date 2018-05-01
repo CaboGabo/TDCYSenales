@@ -41,11 +41,9 @@ int main(int argc, char *argv[]) {
 	FILE* entrada;
 	//FILE* salida;
 
-	if(argc < 2 ) {
-		printf("No introdujiste todos los argumentos"); // Checamos si introdujo todos los argumentos
-		return 0;
-	}
-	entrada = fopen(argv[1], "rb");
+	char nombre[50];
+	gets(nombre);
+	entrada = fopen(nombre, "rb");
 	//salida = fopen(argv[2], "wb"); // Abrimos los archivos
 
 	cabecera = obtenerCabecera(entrada, cabecera); // Obtenemos el encabezado del archivo de entrada
