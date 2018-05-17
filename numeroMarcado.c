@@ -40,17 +40,16 @@ int main(int argc, char *argv[]) {
     HEADER cabeceraStereo;
 	FILE* entrada;
 	//FILE* salida;
-
-	char nombre[50];
-	gets(nombre);
-	entrada = fopen(nombre, "rb");
+    char cadena[100];
+    gets(cadena);
+	entrada = fopen(cadena, "rb");
 	//salida = fopen(argv[2], "wb"); // Abrimos los archivos
 
 	cabecera = obtenerCabecera(entrada, cabecera); // Obtenemos el encabezado del archivo de entrada
     cabeceraStereo = obtenerCabeceraStereo(cabecera,cabeceraStereo); // Obtenemos su equivalente en modo stereo.
     //imprimirCabecera(cabecera);
     //imprimirCabecera(cabeceraStereo);
-    TDF(entrada, cabecera, cabeceraStereo, 0, cabecera.data_size/2);
+        TDF(entrada, cabecera, cabeceraStereo, 0, cabecera.data_size/2);
 	fclose(entrada);
 	return 0;
 }
@@ -132,11 +131,12 @@ long encuentraMinimo(long *x,int tamanioArreglo){
 void TDF(FILE *entrada, /*FILE* salida,*/ HEADER cabecera, HEADER cabeceraStereo, int inicio, int fin) {
     //fwrite(&cabeceraStereo, sizeof(HEADER), 1, salida); // Escribimos el encabezado en formato stereo en el archivo de salida
     int i,t,N = cabecera.data_size/2;
-	float duracion = (float)N/cabecera.sample_rate;
+    float duracion = (float)N/cabecera.sample_rate;
 	int posiciones[8];
 	llenarPosicionesArreglo(posiciones,duracion);
     long sumreal[fin-inicio],sumimag[fin-inicio];
     short salRe[fin-inicio], salIm[fin-inicio];
+    //printf("%d - %d\n", fin, inicio);
     for(i = 0; i<fin-inicio; i++) {
         fseek(entrada, 44+inicio, SEEK_SET);
         short valor = 0;
@@ -229,7 +229,7 @@ void llenarPosicionesArreglo(int posiciones[], float duracion) {
 }
 
 void obtenerNumero(short arreglo[], int posiciones[]) {
-	char numero = ' ';
+	char numero = 'e';
 	if(arreglo[posiciones[0]]>14000) {
 		if(arreglo[posiciones[4]]>14000) {
 			numero = '1';
